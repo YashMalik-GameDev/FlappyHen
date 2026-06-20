@@ -14,11 +14,14 @@ public class Pillars : MonoBehaviour
     private bool hasScored = false;
 
     private GameManager gameManager;
+    private SoundManager soundManager;
 
     private void Start()
     {
         gameManager = FindFirstObjectByType<GameManager>();
+        soundManager = FindFirstObjectByType<SoundManager>();
     }
+
 
     private void Update()
     {
@@ -40,6 +43,7 @@ public class Pillars : MonoBehaviour
         if ( transform.position.x < -1f && !hasScored  )
         {
             gameManager.AddScore();
+            soundManager.PlayScoreSound();
             hasScored = true;
         }
 

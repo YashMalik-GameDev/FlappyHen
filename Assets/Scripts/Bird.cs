@@ -9,6 +9,7 @@ public class Bird : MonoBehaviour
     private float jumpForce = 10f;
 
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private SoundManager soundManager;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class Bird : MonoBehaviour
             Keyboard.current.wKey.wasPressedThisFrame)
         {
             birdRigidbody2D.linearVelocity = Vector2.up * jumpForce;
+            soundManager.PlayJumpSound();
         }
 
 
@@ -37,7 +39,22 @@ public class Bird : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            if (gameManager.GetGameOver())
+            {
+                return;
+            }
+
+            if (gameManager.GetScore() == 0)
+            {
+                soundManager.PlayShameSound();
+            }
+            else
+            {
+                soundManager.PlayCrashSound();
+            }
+            soundManager.StopBackgroundMusic();
             gameManager.GameOver();
+
         }
     }
 
