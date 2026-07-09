@@ -43,7 +43,7 @@ public class Bird : MonoBehaviour
             {
                 return;
             }
-
+            soundManager.PlayHitSound();
             if (gameManager.GetScore() == 0)
             {
                 soundManager.PlayShameSound();

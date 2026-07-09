@@ -7,10 +7,13 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip crashSound;
     [SerializeField] private AudioClip shameSound;
     [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioSource backgroundMusic;
-    private float jumpVolume = 0.1f;
-    private float scoreVolume = 2f;
-    private float crashVolume = 1.5f;
+    private float jumpVolume = 0.2f;
+    private float scoreVolume = 1.2f;
+    private float crashVolume = 1f;
+    private float hitVolume = 0.8f;
+    private float shameVolume = 0.8f;
 
     private AudioSource audioSource;
 
@@ -33,12 +36,17 @@ public class SoundManager : MonoBehaviour
 
     public void PlayShameSound()
     {
-        audioSource.PlayOneShot(shameSound);
+        audioSource.PlayOneShot(shameSound,shameVolume);
     }
 
     public void PlayJumpSound()
     {
         audioSource.PlayOneShot(jumpSound,jumpVolume);
+    }
+
+    public void PlayHitSound()
+    {
+        audioSource.PlayOneShot(hitSound,hitVolume);
     }
 
     public void StopBackgroundMusic()
