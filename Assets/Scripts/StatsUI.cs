@@ -11,8 +11,4 @@ public class StatsUI : MonoBehaviour
     {
         ScoreCountStats.text = gameManager.GetScore() + "\n" + gameManager.GetHighScore();
     }
-
-
-
-
 }

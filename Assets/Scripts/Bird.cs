@@ -7,6 +7,7 @@ public class Bird : MonoBehaviour
 
     private Rigidbody2D birdRigidbody2D;
     private float jumpForce = 10f;
+    private float originalGravityScale;
 
     [SerializeField] private GameManager gameManager;
     [SerializeField] private SoundManager soundManager;
@@ -14,11 +15,12 @@ public class Bird : MonoBehaviour
     private void Awake()
     {
          birdRigidbody2D = GetComponent<Rigidbody2D>();
+         originalGravityScale = birdRigidbody2D.gravityScale;
+         birdRigidbody2D.gravityScale = 0f;
     }
 
     private void Update()
     {
-
         if (gameManager.GetGameOver())
         {
             return;
@@ -28,11 +30,15 @@ public class Bird : MonoBehaviour
             Keyboard.current.spaceKey.wasPressedThisFrame ||
             Keyboard.current.wKey.wasPressedThisFrame)
         {
+            if (!gameManager.GetGameStarted())
+            {
+                gameManager.StartGame();
+                birdRigidbody2D.gravityScale = originalGravityScale;
+            }
+
             birdRigidbody2D.linearVelocity = Vector2.up * jumpForce;
             soundManager.PlayJumpSound();
         }
-
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

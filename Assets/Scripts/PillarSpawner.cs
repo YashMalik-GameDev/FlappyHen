@@ -35,6 +35,12 @@ public class PillarSpawner : MonoBehaviour
 
     private void Update()
     {
+    
+        if (!gameManager.GetGameStarted())
+        {
+            return;
+        }
+
         int score = gameManager.GetScore();
         float currentSpawnTime = spawnTime - ((score /  spawnTimeDecreaseAfterEveryPillars) * spawnTimeDecreaseAmount);
 

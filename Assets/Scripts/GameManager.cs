@@ -8,20 +8,46 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject restartText;
     [SerializeField] private float restartTime = 2f;
+    [SerializeField] private GameObject statsUI;
+    [SerializeField] private GameObject instructionText;
 
     private bool gameover = false;
     private bool canRestart = false;
-    
+    private bool gameStarted = false;
+    private static bool hasPlayedBefore = false;
+
     private int score = 0;
     private int highScore = 0;
 
     private void Start()
     {
         highScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        restartText.SetActive(false);
+
+        if (hasPlayedBefore)
+        {
+            instructionText.SetActive(false);
+            statsUI.SetActive(true);
+        }
+        else
+        {
+            instructionText.SetActive(true);
+            statsUI.SetActive(false);
+        }
     }
 
     private void Update()
     {
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            Application.Quit();
+
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+        }
+
         if (!gameover)
         {
             return;
@@ -78,6 +104,20 @@ public class GameManager : MonoBehaviour
     public int GetHighScore()
     {
         return highScore;
+    }
+
+    public bool GetGameStarted()
+    {
+        return gameStarted;
+    }
+
+    public void StartGame()
+    {
+        gameStarted = true;
+        hasPlayedBefore = true;
+
+        instructionText.SetActive(false);
+        statsUI.SetActive(true);
     }
 
 }

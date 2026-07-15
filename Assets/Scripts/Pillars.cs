@@ -25,8 +25,8 @@ public class Pillars : MonoBehaviour
 
     private void Update()
     {
-        
-        if ( gameManager.GetGameOver() )
+
+        if (!gameManager.GetGameStarted() || gameManager.GetGameOver())
         {
             return;
         }
